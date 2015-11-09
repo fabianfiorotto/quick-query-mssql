@@ -1,7 +1,7 @@
 {
   "name": "quick-query-mssql",
   "main": "./lib/quick-query-mssql",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Run sql queries in SQL Server",
   "keywords": [
     "sql",
