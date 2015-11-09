@@ -1,0 +1,28 @@
+{
+  "name": "quick-query-mssql",
+  "main": "./lib/quick-query-mssql",
+  "version": "0.0.0",
+  "description": "Run sql queries in SQL Server",
+  "keywords": [
+    "sql",
+    "sqlserver"
+  ],
+  "package-deps": [
+    "quick-query"
+  ],
+  "consumedServices": {
+    "quick-query-protocols": {
+      "versions": {
+        "0.5.0": "consumeConnectView"
+      }
+    }
+  },
+  "repository": "https://github.com/fabianfiorotto/quick-query-mssql",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "mssql": "^2.3.1"
+  }
+}
