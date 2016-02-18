@@ -81,7 +81,7 @@ class QuickQueryMssqlConnection
 
   constructor: (@info)->
     @info.server = @info.host
-    @info.database = "master"
+    @info.database ?= "master"
     @emitter = new Emitter()
 
   connect: (callback)->
@@ -93,6 +93,7 @@ class QuickQueryMssqlConnection
     host: c.host,
     port: c.port,
     protocol: @protocol
+    database: c.database,
     user: c.user,
     password: c.password
 
