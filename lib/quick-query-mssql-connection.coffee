@@ -107,7 +107,7 @@ class QuickQueryMssqlConnection
     request = @connection.request()
     request.query text, (err, recordset) =>
       if (err)
-        message = { type: 'error' , content: err }
+        message = { type: 'error' , content: err.toString() }
         callback(message,rows,fields)
       else if recordset?.columns?
         fields = []
