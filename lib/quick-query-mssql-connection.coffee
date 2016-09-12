@@ -192,20 +192,29 @@ class QuickQueryMssqlConnection
 
   getColumns: (table,callback) ->
     database_name = @escapeId(table.schema.database.name)
-    text = "SELECT tc.constraint_type ,c.* "+
-    "FROM #{database_name}.information_schema.columns c "+
-    "LEFT OUTER JOIN #{database_name}.information_schema.key_column_usage kc "+
-    "ON kc.column_name = c.column_name "+
-    "AND kc.table_name = c.table_name "+
-    "AND kc.table_schema = c.table_schema "+
-    "LEFT OUTER JOIN #{database_name}.information_schema.table_constraints tc "+
-    "ON kc.table_name = tc.table_name "+
-    "AND kc.table_schema = tc.table_schema "+
-    "AND tc.constraint_type = 'PRIMARY KEY' "+
+    text = "SELECT  pk.constraint_type ,c.*"+
+    " FROM #{database_name}.information_schema.columns c"+
+    " LEFT OUTER JOIN ("+
+    "  SELECT"+
+    "   tc.constraint_type,"+
+    "   kc.column_name,"+
+    "   tc.table_catalog,"+
+    "   tc.table_name,"+
+    "   tc.table_schema"+
+    "  FROM #{database_name}.information_schema.table_constraints tc"+
+    "  INNER JOIN #{database_name}.information_schema.CONSTRAINT_COLUMN_USAGE kc"+
+    "  ON kc.constraint_name = tc.constraint_name"+
+    "  AND kc.table_catalog = tc.table_catalog"+
+    "  AND kc.table_name = tc.table_name"+
+    "  AND kc.table_schema = tc.table_schema"+
+    "  WHERE tc.constraint_type = 'PRIMARY KEY'"+
+    " ) pk ON pk.column_name = c.column_name"+
+    "  AND pk.table_catalog = c.table_catalog"+
+    "  AND pk.table_name = c.table_name"+
+    "  AND pk.table_schema = c.table_schema"+
     " WHERE c.table_name = '#{table.name}' "+
     " AND c.table_schema = '#{table.schema.name}' "+
-    " AND c.table_catalog = '#{table.schema.database.name}'"+
-    " AND (kc.constraint_name IS NULL OR kc.constraint_name = tc.constraint_name)"
+    " AND c.table_catalog = '#{table.schema.database.name}'"
     @query text , (err, rows, fields) =>
       if !err
         columns = rows.map (row) =>
