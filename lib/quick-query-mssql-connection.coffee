@@ -158,7 +158,6 @@ class QuickQueryMssqlConnection
       unless err? then callback(databases) else console.log err
 
   getDatabases: (callback) ->
-    callback([],null)
     text = "SELECT name FROM master.dbo.sysdatabases"
     @query text , (err, rows, fields) =>
       if !err
