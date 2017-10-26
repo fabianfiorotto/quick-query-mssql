@@ -82,6 +82,8 @@ class QuickQueryMssqlConnection
   constructor: (@info)->
     @info.server = @info.host
     @info.database ?= "master"
+    if @info.user.includes("\\")
+      [@info.domain,@info.user] = @info.user.split("\\")
     @emitter = new Emitter()
 
   connect: (callback)->
@@ -96,6 +98,7 @@ class QuickQueryMssqlConnection
     database: c.database,
     user: c.user,
     password: c.password
+    domain: c.domain
 
   dispose: ->
     @close()
