@@ -1,6 +1,6 @@
 # SQL Server support for Quick Query
 
-This package adds support for SQL Server to [Quick Query](https://atom.io/packages/quick-query)
+This package adds support for SQL Server to [Quick Query](https://web.pulsar-edit.dev/packages/quick-query)
 
 ## Domain login
 
